@@ -2,6 +2,7 @@ lista1 =[]
 adms = []
 clientes = []
 user_logado = []
+animais_cadastrados = []
 logado = False
 while True:
     print('     *****MENU*****\n 1 - Login\n 2 - Cadastrar\n 0 - Encerrar')
@@ -34,7 +35,7 @@ while True:
 
             if logado == False:
                 print('Login ou senha incorretos...')    
-            
+                continue
 
         elif verif == 2:
             login = input('Digite seu nome de usuario: ')
@@ -46,18 +47,13 @@ while True:
                     break
             if logado == False:
                 print('Login ou senha incorretos...')    
-
+                continue
     elif verif == 0:
         break
         
     if logado == True:
         print('Login efetuado com sucesso')
     
-    # isso daqui é temporario
-    elif logado == False:
-        print('algo está errado')
-    # ----------------------------
-
     '''-----------Requisitos Funcionais (ADM):
 
 R1 - Login: Efetuar login com usuário e senha para acessar o menu de gestão da fazenda. Tanto ADM ou CLIENTE pode fazer login.
@@ -68,29 +64,27 @@ R3 - Gerenciar Produção e Derivados: Cadastrar a produção diária. O ADM dev
 
 R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
     '''
-    animais_cadastrados = []
     if user_logado and user_logado[0][1] == True:
         while True:
-            print(f'\n\n\n\nBem-vindo, {user_logado[0][0]} \n     *****MENU*****\n 1 - Gerenciar Rebanho\n 2 - Gerenciar Produção e Derivados\n 0 - Menu de Cadastro\n')
+            print(f'{"\n"*4}Bem-vindo, {user_logado[0][0]} \n     *****MENU*****\n 1 - Gerenciar Rebanho\n 2 - Gerenciar Produção e Derivados\n 0 - Menu de Cadastro\n')
             opcao = int(input('Digite a opção desejada: '))
             if opcao == 1:
                 while True:
                     print('''     *****MENU*****
-        1 - Cadastrar
-        2 - Buscar
-        3 - Atualizar
-        4 - Remover Animais
-        0 - Voltar''')
+1 - Cadastrar
+2 - Buscar
+3 - Atualizar
+4 - Remover Animais
+0 - Voltar''')
                     controle = int(input('Digite a opção desejada: '))
                     if controle == 0:
                         break
             if opcao == 2:
                 while True:
                     print('''     *****MENU*****
-        1 - Cadastrar Produção Diária
-        2 - Registrar Litros de Leite Ordenhados
-        3 - adicionar ao Estoque Produtos Fabricados
-        0 - Voltar''')
+1 - Registrar Litros de Leite Ordenhados
+2 - adicionar ao Estoque Produtos Fabricados
+0 - Voltar''')
                     controle = int(input('Digite a opção desejada: '))
                     if controle == 0:
                         break
