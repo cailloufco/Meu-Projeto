@@ -47,8 +47,8 @@ while True:
             if logado == False:
                 print('Login ou senha incorretos...')    
 
-        elif verif == 0:
-            break
+    elif verif == 0:
+        break
         
     if logado == True:
         print('Login efetuado com sucesso')
