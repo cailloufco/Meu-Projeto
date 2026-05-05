@@ -3,6 +3,7 @@ adms = []
 clientes = []
 user_logado = []
 animais_cadastrados = []
+ListaA = []
 logado = False
 while True:
     print('     *****MENU*****\n 1 - Login\n 2 - Cadastrar\n 0 - Encerrar')
@@ -43,7 +44,7 @@ while True:
             for cliente in clientes:
                 if login == cliente[0] and senha == cliente[1]:
                     logado = True
-                    user_logado = [[cliente[0] ,cliente[2]]]
+                    user_logado = [cliente[0] ,cliente[2]]
                     break
             if logado == False:
                 print('Login ou senha incorretos...')    
@@ -78,8 +79,33 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
 0 - Voltar''')
                     controle = int(input('Digite a opção desejada: '))
                     if controle == 0:
+                        print('Voltando ao meu')
                         break
-            if opcao == 2:
+                    elif controle == 1:
+                        Tipo = str(input("Qual o tipo de animal?\n")).upper()                        
+                        indetificacao = int(input('Qual o número de indentificação?\n'))
+                        status = input('Qual o status do animal?\n')                        
+                        animais_cadastrados.append([Tipo,indetificacao,status])
+                    elif controle == 2:
+                        while True:
+                            print(f'{"\n"*4}O que você deseja buscar, {user_logado[0][0]}? \n     *****MENU*****\n 1 - Busca por ID do animal\n 2 - Buscar por Tipo dos animais\n 3 - Buscar por status\n 0 - Sair da busca\n')
+                            opcao = int(input('Digite a opção desejada: '))
+                            if opcao == 1:
+                                busca = input('Digite o número do animal: ')
+                                for i in range(len(animais_cadastrados)):
+                                    if busca == animais_cadastrados[i][1]:
+                                        index = i
+                                        break
+                                print(f'O seu animal {animais_cadastrados[index]}')
+                            elif opcao == 2:
+                                for i in range(len(animais_cadastrados)):
+                                    busca = input('Digite o Tipo do animal: ')
+                                    if busca == animais_cadastrados[i][0]:
+                                        ListaA.append = animais_cadastrados[i]
+                                        
+                                print(f'O seu animal {ListaA}')
+                                #Lembrar de zerar a ListaA ao voltar pro menu
+            elif opcao == 2:
                 while True:
                     print('''     *****MENU*****
 1 - Registrar Litros de Leite Ordenhados
