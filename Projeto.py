@@ -3,26 +3,27 @@ adms = []
 clientes = []
 user_logado = []
 animais_cadastrados = []
-ListaA = []
+ListaTipos = []
+ListaStatus = []
 logado = False
 while True:
-    print('     *****MENU*****\n 1 - Login\n 2 - Cadastrar\n 0 - Encerrar')
+    print('     *****MENU*****\n 1 - Cadastrar\n 2 - Login\n 0 - Encerrar')
     opcao = int(input('Digite a opção desejada: '))
 
-    if opcao == 2:
-        verif = int(input('Deseja criar um login de ADM ou Cliente?(1 - ADM, 2 - Cliente)'))
+    if opcao == 1:
+        verif = int(input('Deseja criar um conta de ADM ou Cliente?(1 - ADM, 2 - Cliente)'))
         if verif == 1:
             login = input('Crie seu nome de usuario: ')
             senha = input('Crie sua senha: ')
             adms.append([login,senha,True])
-
+        
         elif verif == 2:
             login = input('Crie seu nome de usuario: ')
             senha = input('Crie sua senha: ')
             clientes.append([login,senha,False])
         continue
 
-    elif opcao == 1:
+    elif opcao == 2:
         verif = int(input('Deseja entrar como ADM ou Cliente?(1 - ADM, 2 - Cliente)'))
 
         if verif == 1:
@@ -98,18 +99,35 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                                         break
                                 print(f'O seu animal {animais_cadastrados[index]}')
                             elif opcao == 2:
-                                for i in range(len(animais_cadastrados)):
-                                    busca = input('Digite o Tipo do animal: ')
+                                busca = str(input('Digite o Tipo do animal: ')).upper()
+                                for i in range(len(animais_cadastrados)):                              
                                     if busca == animais_cadastrados[i][0]:
-                                        ListaA.append = animais_cadastrados[i]
+                                        ListaTipos.append = animais_cadastrados[i]
                                         
-                                print(f'O seu animal {ListaA}')
+                                print(f'Os seus {busca}s são:\n{ListaTipos}')
+                                print(f'Você tem {len(ListaTipos)} {busca}s')
+                            elif opcao == 3:                                
+                                busca = str(input('Digite o Status do animal que deseja buscar: ')).upper()
+                                for i in range(len(animais_cadastrados)):                              
+                                    if busca == animais_cadastrados[i][2]:
+                                        ListaStatus.append = animais_cadastrados[i]
+                                print(f'Você tem {len(ListaStatus)} animais em: {busca}')
+                                print(f'Os seus animais em {busca}s são:\n{ListaStatus}')
+                            elif opcao == 0:
+                                print('Encerrando busca.')
+                                break
+                            else:
+                                print('Opçao inválida')
+                                continue
+                    elif controle == 3:
+                            
                                 #Lembrar de zerar a ListaA ao voltar pro menu
             elif opcao == 2:
                 while True:
                     print('''     *****MENU*****
 1 - Registrar Litros de Leite Ordenhados
-2 - adicionar ao Estoque Produtos Fabricados
+2 - adicionar ao Estoque Produtos Fabricados            login = input('Crie seu nome de usuario: ')
+
 0 - Voltar''')
                     controle = int(input('Digite a opção desejada: '))
                     if controle == 0:
