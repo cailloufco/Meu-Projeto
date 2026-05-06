@@ -111,6 +111,7 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                                         
                                 print(f'Os seus {busca}s são:\n{ListaTipos}')
                                 print(f'Você tem {len(ListaTipos)} {busca}s')
+                                ListaTipos.clear()
                             
                             elif opcao == 3:                                
                                 busca = str(input('Digite o Status do animal que deseja buscar: ')).upper()
@@ -119,7 +120,7 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                                         ListaStatus.append = animais_cadastrados[i]
                                 print(f'Você tem {len(ListaStatus)} animais em: {busca}')
                                 print(f'Os seus animais em {busca}s são:\n{ListaStatus}')
-                            
+                                ListaStatus.clear()
                             elif opcao == 0:
                                 print('Encerrando busca.')
                                 break
@@ -153,8 +154,11 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                         elif a == 'N':
                             print('Retornando ao menu')
                             break
-
-                                #Lembrar de zerar a ListaA ao voltar pro menu
+                    elif controle == 0:
+                        break
+                    else:
+                        print('Opção inválida!!!')
+                        continue
             elif opcao == 2:
                 while True:
                     print('''     *****MENU*****
@@ -165,7 +169,8 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                     controle = int(input('Digite a opção desejada: '))
                     if controle == 0:
                         break
-                
+            elif opcao == 3:
+                #R3 em desenvolvimento    
                     
             elif opcao == 0:
                 print('Retomando...')
