@@ -1,10 +1,12 @@
 lista1 =[]
-adms = []
-clientes = []
+adms = [['higor','123',True]]
+clientes = [['caio','123',False]]
 user_logado = []
 animais_cadastrados = []
+produtos_cadastrados = [['OVO',10,'VENDA']]
 ListaTipos = []
 ListaStatus = []
+index = 0
 logado = False
 while True:
     print('     *****MENU*****\n 1 - Cadastrar\n 2 - Login\n 0 - Encerrar')
@@ -107,7 +109,7 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                                 busca = str(input('Digite o Tipo do animal: ')).upper()
                                 for i in range(len(animais_cadastrados)):                              
                                     if busca == animais_cadastrados[i][0]:
-                                        ListaTipos.append = animais_cadastrados[i]
+                                        ListaTipos.append = [animais_cadastrados[i]]
                                         
                                 print(f'Os seus {busca}s são:\n{ListaTipos}')
                                 print(f'Você tem {len(ListaTipos)} {busca}s')
@@ -117,7 +119,7 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                                 busca = str(input('Digite o Status do animal que deseja buscar: ')).upper()
                                 for i in range(len(animais_cadastrados)):                              
                                     if busca == animais_cadastrados[i][2]:
-                                        ListaStatus.append = animais_cadastrados[i]
+                                        ListaStatus.append = [animais_cadastrados[i]]
                                 print(f'Você tem {len(ListaStatus)} animais em: {busca}')
                                 print(f'Os seus animais em {busca}s são:\n{ListaStatus}')
                                 ListaStatus.clear()
@@ -162,16 +164,82 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
             elif opcao == 2:
                 while True:
                     print('''     *****MENU*****
-1 - Registrar Litros de Leite Ordenhados
-2 - adicionar ao Estoque Produtos Fabricados            login = input('Crie seu nome de usuario: ')
-
+1 - Cadastrar
+2 - Buscar
+3 - Atualizar Itens
+4 - Remover Itens
 0 - Voltar''')
                     controle = int(input('Digite a opção desejada: '))
                     if controle == 0:
+                        print('Voltando ao meu')
                         break
-            elif opcao == 3:
-                #R3 em desenvolvimento    
                     
+                    elif controle == 1:
+                        Tipo = str(input("Qual o tipo de Produto?\n")).upper()                        
+                        Quantidade = int(input('Qual a quantidade do Produto no estoque?\n'))
+                        status = input('Qual o status do produto?\n').upper()                     
+                        produtos_cadastrados.append([Tipo,Quantidade,status])
+                    
+                    elif controle == 2:
+                        while True:
+                            print(f'{"\n"*4}O que você deseja buscar, {user_logado[0][0]}? \n     *****MENU*****\n 1 - Busca por Nome do Produto\n 2 - Buscar por status\n 0 - Sair da busca\n')
+                            opcao = int(input('Digite a opção desejada: '))
+                            
+                            if opcao == 1:
+                                busca = input('Digite o nome do Produto: ')
+                                for i in range(len(produtos_cadastrados)):
+                                    if busca == produtos_cadastrados[i][0]:
+                                        index = i
+                                        break
+                                print(f'O situação do seu produto: {produtos_cadastrados[index]}')
+
+                            elif opcao == 2:                                
+                                busca = str(input('Digite o Status dos produtos que deseja buscar: ')).upper()
+                                for i in range(len(produtos_cadastrados)):                              
+                                    if busca == produtos_cadastrados[i][2]:
+                                        ListaStatus.append = [produtos_cadastrados[i]]
+                                print(f'Você tem {len(ListaStatus)} produtos em: {busca}')
+                                print(f'Os seus produtos em {busca}s são:\n{ListaStatus}')
+                                ListaStatus.clear()
+                            elif opcao == 0:
+                                print('Encerrando busca.')
+                                break
+                            else:
+                                print('Opçao inválida')
+                                continue
+                    
+                    elif controle == 3:
+                        busca = int(input('Qual o nome do produto que deseja atualizar?\n'))
+                        for i in range(len(produtos_cadastrados)):
+                                    if busca == produtos_cadastrados[i][0]:
+                                        index = i
+                                        break
+                        a = input(f'O status atual do produto é: {produtos_cadastrados[index][2]}. Deseja Atulizar?(S - Sim N - Não)').upper()
+                        if a == 'S':
+                            b = input('Digite o novo status do produto: ').upper()
+                            produtos_cadastrados[index][2] = b
+                        elif a == 'N':
+                            print('Retornando ao menu')
+                            break
+                    
+                    elif controle == 4:
+                        busca = int(input('Qual o nome do produto que deseja remover?\n'))
+                        for i in range(len(produtos_cadastrados)):
+                                    if busca == produtos_cadastrados[0][1]:
+                                        index = i
+                                        break
+                        a = input(f'Os dados do produto são: {animais_cadastrados[index]}. Deseja Remover?(S - Sim N - Não)').upper()
+                        if a == 'S':
+                            animais_cadastrados.pop[index]
+                        elif a == 'N':
+                            print('Retornando ao menu')
+                            break
+                    elif controle == 0:
+                        break
+                    else:
+                        print('Opção inválida!!!')
+                        continue
+   
             elif opcao == 0:
                 print('Retomando...')
                 logado = False
