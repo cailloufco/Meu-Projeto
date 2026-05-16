@@ -35,7 +35,7 @@ while True:
             for adm in adms:
                 if login == adm[0] and senha == adm[1]:
                     logado = True
-                    user_logado = [adm[0], adm[2]]
+                    user_logado = [[adm[0], adm[2]]]
                     break
 
             if logado == False:
@@ -48,7 +48,7 @@ while True:
             for cliente in clientes:
                 if login == cliente[0] and senha == cliente[1]:
                     logado = True
-                    user_logado = [cliente[0] ,cliente[2]]
+                    user_logado = [[cliente[0] ,cliente[2]]]
                     break
             if logado == False:
                 print('Login ou senha incorretos...')    
@@ -245,7 +245,7 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                 print('Retomando...')
                 logado = False
                 user_logado = []
-                continue
+                break
     
     
         """R5 - Efetuar Compra: O cliente logado pode visualizar o estoque e comprar produtos (ex: 10kg de Queijo Coalho ou 5 Leitões). A compra deve diminuir a quantidade disponível nas listas de estoque do administrador. Usuário ADM não pode fazer compras.
