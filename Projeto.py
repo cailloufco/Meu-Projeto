@@ -35,7 +35,7 @@ while True:
             for adm in adms:
                 if login == adm[0] and senha == adm[1]:
                     logado = True
-                    user_logado = [[adm[0],adm[2]]]
+                    user_logado = [adm[0], adm[2]]
                     break
 
             if logado == False:
@@ -53,7 +53,7 @@ while True:
             if logado == False:
                 print('Login ou senha incorretos...')    
                 continue
-    elif verif == 0:
+    elif opcao == 0:
         break
         
     if logado == True:
@@ -153,7 +153,7 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                                         break
                         a = input(f'Os dados do animal é: {animais_cadastrados[index]}. Deseja Remover?(S - Sim N - Não)').upper()
                         if a == 'S':
-                            animais_cadastrados.pop[index]
+                            animais_cadastrados.pop(index)
                         elif a == 'N':
                             print('Retornando ao menu')
                             break
@@ -231,7 +231,7 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                                         break
                         a = input(f'Os dados do produto são: {animais_cadastrados[index]}. Deseja Remover?(S - Sim N - Não)').upper()
                         if a == 'S':
-                            animais_cadastrados.pop[index]
+                            animais_cadastrados.pop(index)
                         elif a == 'N':
                             print('Retornando ao menu')
                             break
@@ -247,27 +247,16 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                 user_logado = []
                 continue
     
-    elif user_logado and user_logado[0][1] != True and logado == True:
+    
         """R5 - Efetuar Compra: O cliente logado pode visualizar o estoque e comprar produtos (ex: 10kg de Queijo Coalho ou 5 Leitões). A compra deve diminuir a quantidade disponível nas listas de estoque do administrador. Usuário ADM não pode fazer compras.
 
     R6 - Agendar Retirada/Transporte: O cliente deve agendar uma data e horário para o caminhão buscar o leite, os queijos ou os animais comprados na fazenda."""
+    elif user_logado and user_logado[0][1] != True and logado == True:
         while True:
-            print(f'{"\n"*4}Bem-vindo, {user_logado[0][0]} \n     *****MENU CLIENTE*****\n 1 - Visualizar e Comprar Produtos\n 2 - Agendar Retirada/Transporte\n 3 - Ver Meus Agendamentos\n 0 - Sair\n')
+            print(f'{"\n"*4}Bem-vindo, {user_logado[0][0]} \n     *****MENU CLIENTE*****\n 1 - Comprar Produtos \n 2 -Visualizar \n 3 - Agendar Retirada/Transporte\n 4 - Ver Meus Agendamentos\n 0 - Sair\n')
             opcao_cliente = int(input('Digite a opção desejada: '))
 
-            if opcao_cliente == 1:
-                print('\n===== PRODUTOS DISPONÍVEIS =====')
-
-                produto_encontrado = False
-                for posicao_produto in range(len(produtos_cadastrados)):
-                    if produtos_cadastrados[posicao_produto][2] == 'VENDA':
-                        print(f'[{posicao_produto}] Produto: {produtos_cadastrados[posicao_produto][0]} | Quantidade em estoque: {produtos_cadastrados[posicao_produto][1]}')
-                        produto_encontrado = True
-
-                if not produto_encontrado:
-                    print('Nenhum produto disponível para venda no momento.')
-                    continue
-
+            if opcao_cliente == 1: 
                 posicao_escolhida = int(input('\nDigite o número do produto que deseja comprar: '))
 
                 if posicao_escolhida < 0 or posicao_escolhida >= len(produtos_cadastrados):
@@ -300,8 +289,23 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                 else:
                     print('Compra cancelada.')
 
-
             elif opcao_cliente == 2:
+                print('\n===== PRODUTOS DISPONÍVEIS =====')
+
+                produto_encontrado = False
+                for posicao_produto in range(len(produtos_cadastrados)):
+                    if produtos_cadastrados[posicao_produto][2] == 'VENDA':
+                        print(f'[{posicao_produto}] Produto: {produtos_cadastrados[posicao_produto][0]} | Quantidade em estoque: {produtos_cadastrados[posicao_produto][1]}')
+                        produto_encontrado = True
+
+                if not produto_encontrado:
+                    print('Nenhum produto disponível para venda no momento.')
+                    continue
+
+               
+
+
+            elif opcao_cliente == 3:
                 print('\n===== AGENDAR RETIRADA/TRANSPORTE =====')
 
                 item_para_retirar = input('O que deseja retirar? (ex: 10kg Queijo Coalho, 5 Leitões, Leite): ')
@@ -319,7 +323,7 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                     print('Agendamento cancelado.')
 
 
-            elif opcao_cliente == 3:
+            elif opcao_cliente == 4:
                 print('\n===== MEUS AGENDAMENTOS =====')
                 agendamento_encontrado = False
                 for agendamento_atual in agendamentos:
