@@ -59,7 +59,6 @@ while True:
         
     if logado == True:
         print('Login efetuado com sucesso')
-    
     '''-----------Requisitos Funcionais (ADM):
 
 R1 - Login: Efetuar login com usuário e senha para acessar o menu de gestão da fazenda. Tanto ADM ou CLIENTE pode fazer login.
@@ -85,20 +84,20 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
 0 - Voltar''')
                     controle = int(input('Digite a opção desejada: '))
                     if controle == 0:
-                        print('Voltando ao meu')
+                        print('Voltando ao menu')
                         break
                     
                     elif controle == 1:
                         Tipo = str(input("Qual o tipo de animal?\n")).upper()                        
                         indetificacao = int(input('Qual o número de indentificação?\n'))
-                        status = input('Qual o status do animal?\n').upper()                     
-                        animais_cadastrados.append([Tipo,indetificacao,status])
+                        status = input('Qual o status do animal?\n').upper()
+                        animais_cadastrados.append([Tipo, indetificacao, status])
                         
                         venda = input('Deseja colocar esse animal à venda? (S - Sim / N - Não) ').upper()
                         if venda == 'S':
                             preco = float(input('Qual o preço do animal? R$ '))
                             estoque.append(['ANIMAL', indetificacao, Tipo, preco])
-
+                    
                     elif controle == 2:
                         while True:
                             print(f'{"\n"*4}O que você deseja buscar, {user_logado[0][0]}? \n     *****MENU*****\n 1 - Busca por ID do animal\n 2 - Buscar por Tipo dos animais\n 3 - Buscar por status\n 0 - Sair da busca\n')
@@ -172,6 +171,7 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                     else:
                         print('Opção inválida!!!')
                         continue
+
             elif opcao == 2:
                 while True:
                     print('''     *****MENU*****
@@ -182,14 +182,19 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
 0 - Voltar''')
                     controle = int(input('Digite a opção desejada: '))
                     if controle == 0:
-                        print('Voltando ao meu')
+                        print('Voltando ao menu')
                         break
                     
                     elif controle == 1:
                         Tipo = str(input("Qual o tipo de Produto?\n")).upper()                        
                         Quantidade = int(input('Qual a quantidade do Produto no estoque?\n'))
                         status = input('Qual o status do produto?\n').upper()                     
-                        produtos_cadastrados.append([Tipo,Quantidade,status])
+                        produtos_cadastrados.append([Tipo, Quantidade, status])
+
+                        venda = input('Deseja colocar esse produto à venda no estoque? (S - Sim / N - Não) ').upper()
+                        if venda == 'S':
+                            preco = float(input('Qual o preço do produto? R$ '))
+                            estoque.append(['PRODUTO', Tipo, Quantidade, preco])
                     
                     elif controle == 2:
                         while True:
@@ -208,7 +213,7 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                                 busca = str(input('Digite o Status dos produtos que deseja buscar: ')).upper()
                                 for i in range(len(produtos_cadastrados)):                              
                                     if busca == produtos_cadastrados[i][2]:
-                                        ListaStatus.append ([produtos_cadastrados[i]])
+                                        ListaStatus.append([produtos_cadastrados[i]])
                                 print(f'Você tem {len(ListaStatus)} produtos em: {busca}')
                                 print(f'Os seus produtos em {busca}s são:\n{ListaStatus}')
                                 ListaStatus.clear()
@@ -220,7 +225,7 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                                 continue
                     
                     elif controle == 3:
-                        busca = int(input('Qual o nome do produto que deseja atualizar?\n'))
+                        busca = input('Qual o nome do produto que deseja atualizar?\n').upper()
                         for i in range(len(produtos_cadastrados)):
                                     if busca == produtos_cadastrados[i][0]:
                                         index = i
@@ -234,14 +239,19 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                             break
                     
                     elif controle == 4:
-                        busca = int(input('Qual o nome do produto que deseja remover?\n'))
+                        busca = input('Qual o nome do produto que deseja remover?\n').upper()
                         for i in range(len(produtos_cadastrados)):
-                                    if busca == produtos_cadastrados[0][1]:
+                                    if busca == produtos_cadastrados[i][0]:
                                         index = i
                                         break
-                        a = input(f'Os dados do produto são: {animais_cadastrados[index]}. Deseja Remover?(S - Sim N - Não)').upper()
+                        a = input(f'Os dados do produto são: {produtos_cadastrados[index]}. Deseja Remover?(S - Sim N - Não)').upper()
                         if a == 'S':
-                            animais_cadastrados.pop(index)
+                            produtos_cadastrados.pop(index)
+                           
+                            for i in range(len(estoque)):
+                                if estoque[i][1] == busca:
+                                    estoque.pop(i)
+                                    break
                         elif a == 'N':
                             print('Retornando ao menu')
                             break
@@ -256,71 +266,51 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                 logado = False
                 user_logado = []
                 break
-    
-    
-        """R5 - Efetuar Compra: O cliente logado pode visualizar o estoque e comprar produtos (ex: 10kg de Queijo Coalho ou 5 Leitões). A compra deve diminuir a quantidade disponível nas listas de estoque do administrador. Usuário ADM não pode fazer compras.
 
-    R6 - Agendar Retirada/Transporte: O cliente deve agendar uma data e horário para o caminhão buscar o leite, os queijos ou os animais comprados na fazenda."""
+        """
+        R5 - Efetuar Compra: O cliente logado pode visualizar o estoque e comprar produtos (ex: 10kg de Queijo Coalho ou 5 Leitões). A compra deve diminuir a quantidade disponível nas listas de estoque do administrador. Usuário ADM não pode fazer compras.
+
+        R6 - Agendar Retirada/Transporte: O cliente deve agendar uma data e horário para o caminhão buscar o leite, os queijos ou os animais comprados na fazenda.
+        """
     elif user_logado and user_logado[0][1] != True and logado == True:
         while True:
-            print(f'{"\n"*4}Bem-vindo, {user_logado[0][0]} \n     *****MENU CLIENTE*****\n 1 - Comprar Produtos \n 2 -Visualizar \n 3 - Agendar Retirada/Transporte\n 4 - Ver Meus Agendamentos\n 0 - Sair\n')
+            print(f'{"\n"*4}Bem-vindo, {user_logado[0][0]} \n     *****MENU CLIENTE*****\n 1 - Comprar \n 2 - Visualizar Estoque\n 3 - Agendar Retirada/Transporte\n 4 - Ver Meus Agendamentos\n 0 - Sair\n')
             opcao_cliente = int(input('Digite a opção desejada: '))
 
-            if opcao_cliente == 1: 
-                posicao_escolhida = int(input('\nDigite o número do produto que deseja comprar: '))
+            if opcao_cliente == 1:
+                if len(estoque) == 0:
+                    print('Nenhum item disponível no momento.')
+                    continue
+
+                posicao_escolhida = int(input('\nDigite o número do item que deseja comprar: '))
 
                 if posicao_escolhida < 0 or posicao_escolhida >= len(estoque):
-                    print('Produto inválido.')
+                    print('Item inválido.')
                     continue
 
-                if produtos_cadastrados[posicao_escolhida][2] != 'VENDA':
-                    print('Esse produto não está disponível para venda.')
-                    continue
-
-                quantidade_desejada = int(input(f'Quantas unidades de {produtos_cadastrados[posicao_escolhida][0]} deseja comprar? '))
-
-                if quantidade_desejada > produtos_cadastrados[posicao_escolhida][1]:
-                    print(f'Quantidade indisponível. Temos apenas {produtos_cadastrados[posicao_escolhida][1]} unidade(s) em estoque.')
-                    continue
-
-                if quantidade_desejada <= 0:
-                    print('Quantidade inválida.')
-                    continue
-
-                confirmacao_compra = input(f'Confirmar compra de {quantidade_desejada}x {produtos_cadastrados[posicao_escolhida][0]}? (S - Sim / N - Não) ').upper()
+                confirmacao_compra = input(f'Confirmar compra de {estoque[posicao_escolhida][2]}? (S - Sim / N - Não) ').upper()
 
                 if confirmacao_compra == 'S':
-                    produtos_cadastrados[posicao_escolhida][1] = produtos_cadastrados[posicao_escolhida][1] - quantidade_desejada
-                    print(f'Compra realizada com sucesso! Você comprou {quantidade_desejada}x {produtos_cadastrados[posicao_escolhida][0]}.')
-
-                    if produtos_cadastrados[posicao_escolhida][1] == 0:
-                        produtos_cadastrados[posicao_escolhida][2] = 'ESGOTADO'
-                        print(f'Aviso: o produto {produtos_cadastrados[posicao_escolhida][0]} ficou sem estoque.')
+                    print(f'Compra realizada com sucesso! Você comprou {estoque[posicao_escolhida][2]}.')
+                    estoque.pop(posicao_escolhida)
                 else:
                     print('Compra cancelada.')
 
+
             elif opcao_cliente == 2:
-                print('\n===== PRODUTOS DISPONÍVEIS =====')
-
-                produto_encontrado = False
-                for posicao_item in range(len(estoque)):
-                    print(f'[{posicao_item}] Tipo: {estoque[posicao_item][0]} | {estoque[posicao_item][2]} | Preço: R$ {estoque[posicao_item][3]}')
-                    produto_encontrado = True
-
-                if not produto_encontrado:
-                    print('Nenhum produto disponível para venda no momento.')
+                print('\n===== ITENS DISPONÍVEIS =====')
+                if len(estoque) == 0:
+                    print('Nenhum item disponível no momento.')
                     continue
-
-               
-
+                for posicao_item in range(len(estoque)):
+                    print(f'[{posicao_item}] {estoque[posicao_item][0]} | {estoque[posicao_item][2]} | Preço: R$ {estoque[posicao_item][3]}')
 
             elif opcao_cliente == 3:
+                
                 print('\n===== AGENDAR RETIRADA/TRANSPORTE =====')
 
                 item_para_retirar = input('O que deseja retirar? (ex: 10kg Queijo Coalho, 5 Leitões, Leite): ')
-
                 data_retirada = input('Informe a data para retirada (ex: 25/06/2025): ')
-
                 horario_retirada = input('Informe o horário para retirada (ex: 14:00): ')
 
                 confirmacao_agendamento = input(f'\nConfirmar agendamento?\n  Item: {item_para_retirar}\n  Data: {data_retirada}\n  Horário: {horario_retirada}\n(S - Sim / N - Não) ').upper()
@@ -330,7 +320,6 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                     print('Agendamento realizado com sucesso! O caminhão estará na fazenda na data e horário informados.')
                 else:
                     print('Agendamento cancelado.')
-
 
             elif opcao_cliente == 4:
                 print('\n===== MEUS AGENDAMENTOS =====')
