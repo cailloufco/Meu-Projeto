@@ -2,14 +2,15 @@ lista1 = []
 adms = [["higor", "123", True]]
 clientes = [["caio", "123", False]]
 user_logado = []
-animais_cadastrados = []
+animais_cadastrados = [["TIPO", "ID", "STATUS", "VENDA OU NÃO"]]
 produtos_cadastrados = [["OVO", 10, "VENDA"]]
 ListaTipos = []
 ListaStatus = []
 index = 0
+index2 = 0
 logado = False
 agendamentos = []
-estoque = []
+estoque = [[produtos_cadastrados[0],10]]
 while True:
     print("     *****MENU*****\n 1 - Cadastrar\n 2 - Login\n 0 - Encerrar")
     opcao = int(input("Digite a opção desejada: "))
@@ -51,7 +52,7 @@ while True:
             for cliente in clientes:
                 if login == cliente[0] and senha == cliente[1]:
                     logado = True
-                    user_logado = [[cliente[0], cliente[2]]]
+                    user_logado = [cliente[0], cliente[2]]
                     break
             if logado == False:
                 print("Login ou senha incorretos...")
@@ -61,16 +62,7 @@ while True:
 
     if logado == True:
         print("Login efetuado com sucesso")
-    """-----------Requisitos Funcionais (ADM):
 
-R1 - Login: Efetuar login com usuário e senha para acessar o menu de gestão da fazenda. Tanto ADM ou CLIENTE pode fazer login.
-
-R2 - Gerenciar Rebanho: Cadastrar, buscar, atualizar e remover animais. O cadastro deve incluir o tipo do animal (Bovino de Leite, Caprino, Ovino, Suíno/Leitão), identificação (brinco/número) e status (ex: em lactação, para engorda, disponível para venda).
-
-R3 - Gerenciar Produção e Derivados: Cadastrar a produção diária. O ADM deve poder registrar litros de leite ordenhados e adicionar ao estoque produtos fabricados (ex. Queijo Coalho, Queijo Manteiga), informando o peso (kg) e o valor de venda.
-
-R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
-    """
     if user_logado and user_logado[0][1] == True:
         while True:
             print(
@@ -107,7 +99,7 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                     elif controle == 2:
                         while True:
                             print(
-                                f'{"\n"*4}O que você deseja buscar, {user_logado[0][0]}? \n     *****MENU*****\n 1 - Busca por ID do animal\n 2 - Buscar por Tipo dos animais\n 3 - Buscar por status\n 0 - Sair da busca\n'
+                                f'{"\n"*4}O que você deseja buscar, {user_logado[0][0]}? \n     *****MENU*****\n 1 - Busca por ID do animal\n 2 - Buscar por Tipo dos animais\n 3 - Buscar por status\n 4 - Verificar animais à venda\n 0 - Sair da busca\n'
                             )
                             opcao = int(input("Digite a opção desejada: "))
 
@@ -145,6 +137,16 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                                     f"Os seus animais em {busca}s são:\n{ListaStatus}"
                                 )
                                 ListaStatus.clear()
+                            elif opcao == 4:
+                                print("Animais à venda:\n")
+                                for i in range(len(estoque)):
+                                    if "ANIMAL" == estoque[i][0]:
+                                        ListaStatus.append(estoque[i])
+                                print(f"Você tem {len(ListaStatus)} animais à VENDA")
+                                print(
+                                    f"Os seus animais à são:\n{ListaStatus}", end="\n"
+                                )
+                                ListaStatus.clear()
                             elif opcao == 0:
                                 print("Encerrando busca.")
                                 break
@@ -162,15 +164,32 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                             if busca == animais_cadastrados[i][1]:
                                 index = i
                                 break
-                        a = input(
-                            f"O status atual do animal é: {animais_cadastrados[index][2]}. Deseja Atulizar?(S - Sim N - Não)"
-                        ).upper()
-                        if a == "S":
-                            b = input("Digite o status atual do animal: ").upper()
-                            animais_cadastrados[index][2] = b
-                        elif a == "N":
-                            print("Retornando ao menu")
-                            break
+                        for i in range(len(estoque)):
+                            if busca == estoque[i][1]:
+                                index2 = i
+                                break
+                        if index2:
+                            a = input(
+                                f"O status atual do animal é: {animais_cadastrados[index][2]}, e seu valor no estoque é: {estoque[index2][3]}. Deseja Atulizar?(S - Sim N - Não)"
+                            ).upper()
+                            if a == "S":
+                                b = input("Digite o status atual do animal: ").upper()
+                                c = input("Qual o preço do animal: ")
+                                estoque[index2][3] = c
+                                animais_cadastrados[index][2] = b
+                            else:
+                                print("Retornando ao menu")
+                                break
+                        else:
+                            a = input(
+                                f"O status atual do animal é: {animais_cadastrados[index][2]}. Deseja Atulizar?(S - Sim N - Não)"
+                            ).upper()
+                            if a == "S":
+                                b = input("Digite o status atual do animal: ").upper()
+                                animais_cadastrados[index][2] = b
+                            else:
+                                print("Retornando ao menu")
+                                break
 
                     elif controle == 4:
                         busca = int(
@@ -237,10 +256,11 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
 
                             if opcao == 1:
                                 busca = input("Digite o nome do Produto: ")
-                                for i in range(len(produtos_cadastrados)):
-                                    if busca == produtos_cadastrados[i][0]:
-                                        index = i
-                                        break
+                                if busca in estoque:                                    
+                                    for i in range(len(produtos_cadastrados)):
+                                        if busca == produtos_cadastrados[i][0]:
+                                            index = i
+                                            break
                                 print(
                                     f"O situação do seu produto: {produtos_cadastrados[index]}"
                                 )
@@ -276,15 +296,32 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                             if busca == produtos_cadastrados[i][0]:
                                 index = i
                                 break
-                        a = input(
-                            f"O status atual do produto é: {produtos_cadastrados[index][2]}. Deseja Atulizar?(S - Sim N - Não)"
-                        ).upper()
-                        if a == "S":
-                            b = input("Digite o novo status do produto: ").upper()
-                            produtos_cadastrados[index][2] = b
-                        elif a == "N":
-                            print("Retornando ao menu")
-                            break
+                            
+                        index2 = 'nada'
+                        for i in range(len(estoque)):
+                            if busca == estoque[i][1] :
+                                index2 = i
+
+                        if index2 != 'nada' :
+                            a = input(f"O status atual do produto é: {produtos_cadastrados[index][2]}, e seu valor no estoque é: R$ {estoque[index2][3]}. Deseja Atualizar?(S - Sim N - Não) ").upper()
+                            if a == "S":
+                                b = input("Digite o novo status do produto: ").upper()
+                                produtos_cadastrados[index][2] = b
+                                c = input("Qual o novo preço do produto? R$ ")
+                                estoque[index2][3] = c
+                            else:
+                                print("Retornando ao menu")
+
+                        else:
+                            a = input(
+                                f"O status atual do produto é: {produtos_cadastrados[index][2]}. Deseja Atulizar?(S - Sim N - Não)"
+                            ).upper()
+                            if a == "S":
+                                b = input("Digite o novo status do produto: ").upper()
+                                produtos_cadastrados[index][2] = b
+                            elif a == "N":
+                                print("Retornando ao menu")
+                                break
 
                     elif controle == 4:
                         busca = input(
