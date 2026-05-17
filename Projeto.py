@@ -9,6 +9,7 @@ ListaStatus = []
 index = 0
 logado = False
 agendamentos = []
+estoque = []
 while True:
     print('     *****MENU*****\n 1 - Cadastrar\n 2 - Login\n 0 - Encerrar')
     opcao = int(input('Digite a opção desejada: '))
@@ -92,7 +93,12 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                         indetificacao = int(input('Qual o número de indentificação?\n'))
                         status = input('Qual o status do animal?\n').upper()                     
                         animais_cadastrados.append([Tipo,indetificacao,status])
-                    
+                        
+                        venda = input('Deseja colocar esse animal à venda? (S - Sim / N - Não) ').upper()
+                        if venda == 'S':
+                            preco = float(input('Qual o preço do animal? R$ '))
+                            estoque.append(['ANIMAL', indetificacao, Tipo, preco])
+
                     elif controle == 2:
                         while True:
                             print(f'{"\n"*4}O que você deseja buscar, {user_logado[0][0]}? \n     *****MENU*****\n 1 - Busca por ID do animal\n 2 - Buscar por Tipo dos animais\n 3 - Buscar por status\n 0 - Sair da busca\n')
@@ -154,6 +160,10 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                         a = input(f'Os dados do animal é: {animais_cadastrados[index]}. Deseja Remover?(S - Sim N - Não)').upper()
                         if a == 'S':
                             animais_cadastrados.pop(index)
+                            for i in range(len(estoque)):
+                                if estoque[i][1] == busca:
+                                    estoque.pop(i)
+                                    break
                         elif a == 'N':
                             print('Retornando ao menu')
                             break
@@ -259,7 +269,7 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
             if opcao_cliente == 1: 
                 posicao_escolhida = int(input('\nDigite o número do produto que deseja comprar: '))
 
-                if posicao_escolhida < 0 or posicao_escolhida >= len(produtos_cadastrados):
+                if posicao_escolhida < 0 or posicao_escolhida >= len(estoque):
                     print('Produto inválido.')
                     continue
 
@@ -293,10 +303,9 @@ R4 - Tema Livre (ADM): Criar uma funcionalidade útil para o produtor rural.
                 print('\n===== PRODUTOS DISPONÍVEIS =====')
 
                 produto_encontrado = False
-                for posicao_produto in range(len(produtos_cadastrados)):
-                    if produtos_cadastrados[posicao_produto][2] == 'VENDA':
-                        print(f'[{posicao_produto}] Produto: {produtos_cadastrados[posicao_produto][0]} | Quantidade em estoque: {produtos_cadastrados[posicao_produto][1]}')
-                        produto_encontrado = True
+                for posicao_item in range(len(estoque)):
+                    print(f'[{posicao_item}] Tipo: {estoque[posicao_item][0]} | {estoque[posicao_item][2]} | Preço: R$ {estoque[posicao_item][3]}')
+                    produto_encontrado = True
 
                 if not produto_encontrado:
                     print('Nenhum produto disponível para venda no momento.')
