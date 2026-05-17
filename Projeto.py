@@ -49,7 +49,7 @@ while True:
             for cliente in clientes:
                 if login == cliente[0] and senha == cliente[1]:
                     logado = True
-                    user_logado = [[cliente[0] ,cliente[2]]]
+                    user_logado = [cliente[0] ,cliente[2]]
                     break
             if logado == False:
                 print('Login ou senha incorretos...')    
